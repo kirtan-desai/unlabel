@@ -1,0 +1,25 @@
+.recent-activity-header{
+    color: white;
+    font-size: 27px;
+}
+
+.activities{
+    color: white;
+    padding: 20px 0;
+}
+
+.activities li {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.activities p{
+    margin-top: 2px;
+    color: #b4b2b2;
+    font-size: 15px;
+}
+
+.activities a{
+    color: #73f5c6;
+    font-weight: bold;
+}

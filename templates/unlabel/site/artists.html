@@ -1,0 +1,68 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Explore {% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/list.css" %}"/>{% endblock %}
+{% block js %}
+    <script src="{% static "js/list.js" %}"></script>{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li style="background-color: #ff0202; color: white; padding: 10px" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <section class="banner">
+        <h1>The best artists. Curated.</h1>
+    </section>
+    <main>
+        <!-- Vertical Nav Bar -->
+        <section class="category-list-container">
+            <ul class="category-list">
+                <li>
+                    <a href="#">Trending</a>
+                </li>
+                <li>
+                    <a href="#">Hip Hop</a>
+                </li>
+                <li><a href="#">Electronic</a></li>
+                <li><a href="#">Solo</a></li>
+                <li><a href="#">Alternative Rock</a></li>
+                <li>
+                    <a href="#">Metal</a>
+                </li>
+                <li>
+                    <a href="#">Fusion</a>
+                </li>
+                <li>
+                    <a href="#">Classical</a>
+                </li>
+                <li><a href="#">Instrumental</a></li>
+                <li><a href="#">Dance</a></li>
+            </ul>
+        </section>
+
+        <!-- Artists listing -->
+        <ul class="artists-list">
+            {% for artist in artist_list %}
+                <li class="artist">
+                    <a href="{% url 'unlabel:artist' artist.user.username %}">
+                        <img src="{% static artist.artistImage %}" alt={{ artist.artistName }}/>
+                    </a>
+                    <h3>{{ artist.artistName }}</h3>
+                    {% if request.session.role == 'admin' %}
+                        <form class="delete" method="post" action="{% url 'unlabel:delete' artist.id %}">
+                            {% csrf_token %}
+                            <input value="{{ artist.id }}" name="artistId" type="hidden">
+                            <button type="submit" onclick="return confirm('Do you want to delete?')">Delete</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+    </main>
+{% endblock %}

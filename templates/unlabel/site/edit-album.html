@@ -1,0 +1,38 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Edit Album{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/add-album.css" %}"/>{% endblock %}
+{% block content %}
+    <main>
+        <section class="left">
+            <form method="post" action="{% url 'unlabel:edit_album' album.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="albumId" value="{{ album.id }}">
+                <p class="login">Edit this album!</p>
+                <div class="album-info">
+                    <label for="album-art">Album Art</label><br>
+                    <input required type="text" placeholder="Album Art" value="{{ album.albumArt }}" name="album-art"
+                           id="album-art"/><span>.jpg/png</span>
+{#                    <button>Upload</button>#}
+                    <br>
+                    <label for="album-name">Album Name</label><br>
+                    <input required type="text" placeholder="Album Name" value="{{ album.albumName }}" name="album-name" id="album-name"/>
+                </div>
+
+                <div class="songs-info">
+                <label for="song-name">Song Names</label><br>
+                    {% for song in songs %}
+
+                        <input type="text" placeholder="Song Name" value="{{ song.songName }}" name="song-name" id="song-name"/>
+                    {% endfor %}
+                    <button class="add" type="submit">Save</button>
+                </div>
+            </form>
+        </section>
+        <section class="right">
+            <p>Make changes to</p>{{ album.albumName }}
+            <img src="{% static album.albumArt %}">
+        </section>
+    </main>
+{% endblock %}

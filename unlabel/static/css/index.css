@@ -1,0 +1,169 @@
+
+
+.content-1 {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(110, 9, 9);
+  color: white;
+}
+
+.content-1 h1 {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  background-color: black;
+  display: flex;
+  width: fit-content;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.search-bar input {
+  background-color: black;
+  padding: 10px;
+  width: 300px;
+  height: 30px;
+  color: white;
+}
+
+.search-bar button {
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+
+.logged-in-content{
+  display: flex;
+}
+
+.feed{
+  flex-grow: 1;
+  background-color: black;
+  padding: 20px;
+}
+
+.content-2 {
+  background-color: black;
+  padding: 20px;
+}
+
+.content-2 p {
+  color: white;
+  font-size: 27px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.logged-in-content .new-albums {
+  display: flex;
+  max-width: 120vh;
+  overflow-x: auto;
+  gap:4em;
+}
+
+.new-albums {
+  display: flex;
+  overflow-x: auto;
+  gap:4em;
+}
+
+.content-2 div a img {
+  width: 12em;
+  height: auto;
+}
+
+.artist{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  max-width: 200px;
+}
+
+.artist div{
+  padding: 20px;
+}
+
+h3{
+  color:white;
+  padding-top: 10px;
+}
+
+
+.content-3 {
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(10, 1, 7, 0.918);
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+}
+
+.content-3 > div > div {
+  padding: 20px;
+  display: flex;
+}
+
+.content-3 > div > div > div {
+  width: 50%;
+}
+
+.content-4 {
+  display: flex;
+  justify-content: center;
+}
+
+.content-4 img {
+  width: 9em;
+}
+
+.playlist-container {
+  width: 50%;
+  padding: 50px;
+}
+
+.playlist-container > div {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  body {
+    width: 100%;
+  }
+
+  .content-1 h1 {
+    font-size: 30px;
+  }
+  .search-bar input {
+    width: 200px;
+  }
+
+  .content-3 > div > div {
+    flex-direction: column;
+  }
+  .content-3 > div > div > div {
+    width: 100%;
+    padding-top: 20px;
+  }
+
+  .content-3 {
+    padding: 40px 0;
+    line-height: 1.25em;
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .logged-in-content {
+    flex-direction: column;
+  }
+
+  .logged-in-content .new-albums {
+    max-width: 100%
+  }
+
+}

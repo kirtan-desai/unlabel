@@ -1,0 +1,188 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Artist{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/artist.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/feed.css" %}"/>
+{% endblock %}
+
+{% block content %}
+    {#    <section >#}
+    {#      <div class="cover-image"></div>#}
+    {#    </section>#}
+    <section class="artist-info">
+        <div>
+            <div class="profile-image">
+                <img src="{% static artist.artistImage %}" alt=""/>
+            </div>
+            <div class="artist-text">
+                <div style="display: flex; align-items: center; margin-bottom: 10px">
+                    <h1>{{ artist.artistName }} @{{ artist.user.username }} </h1>
+                    {% if request.session.role == 'admin' %}
+                        <div class="admin-role">
+
+                            {% if artist.role == 'regular' %}
+                                <form method="post" action="{% url 'unlabel:make_admin' artist.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Make admin</button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'unlabel:remove_admin' artist.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Remove admin</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <p>
+                        {{ artist.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="links">
+            {#<button onclick="window.location.href='{% url 'unlabel:forum' %}';">Forum</button>#}
+            {% if request.session.role == 'regular' and artist.user.username == request.session.username or request.session.role == 'admin' %}
+                <form action="{% url 'unlabel:edit_profile' artist.user.username %}">
+                    <button class="edit-profile">Edit Profile</button>
+                </form>
+            {% endif %}
+
+            <div>
+                {% if request.session.role == 'regular' and artist.user.username == request.session.username or request.session.role == 'admin' %}
+                    <form method="post" action="{% url 'unlabel:music_visibility' artist.id %}">
+                        {% csrf_token %}
+                        <input {% if artist.music_visibility == 'SM' %} checked {% endif %} id="SM" value="SM"
+                                                                        name="music-visibility" type="radio"
+                                                                        onchange="this.form.submit()">
+                        <label for="SM">Show music</label><br>
+
+                        <input {% if artist.music_visibility == 'HM' %} checked {% endif %} id="HM" value="HM"
+                                                                        name="music-visibility" type="radio"
+                                                                        onchange="this.form.submit()">
+                        <label for="HM">Hide music</label>
+
+
+                    </form>
+                {% endif %}
+            </div>
+
+            <button>Support</button>
+            <div class="social-media">
+                <i class="fab fa-facebook-square"></i>
+                <i class="fab fa-youtube"></i>
+                <i class="fab fa-twitter-square"></i>
+            </div>
+        </div>
+    </section>
+
+    {#  CONTENT   #}
+    <section class="content">
+
+        {# Left Content    #}
+        <div class="left">
+            {#            <div class="song-player">#}
+            {#                <div>#}
+            {#                    <div class="container-1">#}
+            {#                        <div>#}
+            {#                            <h2>{{ albums.1.songs.0.songName }}</h2>#}
+            {#                            <p>{{ albums.1.albumName }}</p>#}
+            {#                        </div>#}
+            {#                        <div class="controls">#}
+            {#                            <i class="fas fa-backward">&nbsp;</i>&nbsp;<i#}
+            {#                                class="fas fa-play"#}
+            {#                        >&nbsp;<i class="fas fa-forward"></i#}
+            {#                        ></i>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                    <div class="song-player-bar">song player bar</div>#}
+            {#                </div>#}
+            {#                <div class="song-image">#}
+            {#                    <img src="{% static albums.1.albumArt %}" alt="" style="width: 60px"/>#}
+            {#                </div>#}
+            {#            </div>#}
+
+            {# Album List #}
+
+            <div class="albums">
+                <p>Albums</p>
+
+                {% if not albums %}
+                    <p style="font-size: 16px; background-color: #ff0202; padding: 3px; margin-top: 10px">No albums
+                        added yet!</p>
+                {% endif %}
+                {% if artist.music_visibility == 'SM' %}
+                    <div class="album-list">
+
+                        {% for album in albums %}
+                            <div>
+                                <a href="{% url 'unlabel:album' album.id %}">
+                                    <img src="{% static album.albumArt %}" alt=""/>
+
+                                </a>
+                                <p>{{ album.albumName }}</p>
+
+
+                                {# Edit Album #}
+                                {% if request.session.role == 'regular' and artist.user.username == request.session.username %}
+                                    <form action="{% url 'unlabel:edit_album' album.id %}">
+                                        <button class="edit">Edit</button>
+                                    </form>
+                                {% endif %}
+
+                                {# Delete #}
+                                {% if request.session.role == 'admin' %}
+                                    <form class="delete" method="post" action="{% url 'unlabel:delete' album.id %}">
+                                        {% csrf_token %}
+                                        <input value="{{ album.id }}" name="albumId" type="hidden">
+                                        <button type="submit" onclick="return confirm('Do you want to delete?')">Delete
+                                        </button>
+                                    </form>
+
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {#Add Album#}
+                {% if request.session.role == 'regular' and artist.user.username == request.session.username %}
+                    <form action="{% url 'unlabel:add_album' artist.id %}">
+                        <button class="add-new">Add new album</button>
+                    </form>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="feed">
+            {% include "unlabel/site/feed.html" %}
+        </div>
+
+
+        <div class="right">
+            <p>Recent Supporters</p>
+            <ul class="recent-supporters">
+                <li>
+                    <img src="{% static "avatars/alex-suprun-ZHvM3XIOHoE-unsplash.jpg" %}" alt=""/>
+                </li>
+                <li>
+                    <img src="{% static "avatars/ben-parker-OhKElOkQ3RE-unsplash.jpg" %}" alt=""/>
+                </li>
+                <li>
+                    <img src="{% static "avatars/leio-mclaren-L2dTmhQzx4Q-unsplash.jpg" %}" alt=""/>
+                </li>
+                <li>
+                    <img src="{% static "avatars/nicolas-horn-MTZTGvDsHFY-unsplash.jpg" %}" alt=""/>
+                </li>
+                <li>
+                    <img src="{% static "avatars/sigmund-jzz_3jWMzHA-unsplash.jpg" %}" alt=""/>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+{% endblock %}
+

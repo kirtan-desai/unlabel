@@ -1,0 +1,18 @@
+{% load humanize %}
+
+<h1  class="recent-activity-header">Recent Activity</h1>
+
+<ul class="activities">
+    {% for action in actions %}
+        <li>
+            <a href="{{ action.user.artist.get_absolute_url }}">{{ action.user.username }}</a>
+            {{ action.verb }}
+            {% if action.target %}
+                <a href="{{ action.target.get_absolute_url }}">{{ action.target }}</a>
+             {% endif %}
+            <p>{{ action.created | naturaltime }}</p>
+        </li>
+    {% empty %}
+        <p>No activity yet!</p>
+    {% endfor %}
+</ul>

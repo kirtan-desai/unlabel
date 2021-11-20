@@ -1,0 +1,322 @@
+body {
+  display: flex;
+  flex-direction: column;
+  width: 975px;
+  background-color: black;
+  align-self: center;
+  margin: auto;
+  color: white;
+}
+
+.cover-image {
+  width: 100%;
+  height: 180px;
+  background-image: url("../cover images/PCRC.jpg");
+  background-size: cover;
+}
+
+.artist-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  padding: 20px 0;
+}
+
+.artist-info > div:first-child {
+  display: flex;
+}
+
+.artist-info h1 {
+  font-size: 30px;
+  font-weight: bold;
+
+}
+
+.artist-info p {
+  max-height: 155px;
+  overflow-y: scroll;
+}
+
+.profile-image {
+  width: 200px;
+}
+
+.profile-image img {
+  min-width: 200px;
+  max-width: 100%;
+  height: auto;
+}
+
+.admin-role button{
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px;
+  background-color: rgb(239, 184, 73);
+  color: black;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+
+.artist-text {
+  margin-left: 25px;
+  margin-right: 25px;
+  text-align: justify;
+}
+
+.artist-text p {
+  font-size: 15px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-top: 30px;
+  margin-right: 20px;
+}
+
+.social-media {
+  display: flex;
+  justify-content: space-between;
+  font-size: 19px;
+}
+
+
+.links button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: rgb(0, 0, 0);
+  border: 1px solid white;
+  border-radius: 3px;
+  width: 120px;
+  height: 25px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  color: rgb(255, 255, 255);
+}
+
+.links button:hover {
+  background: rgb(255, 255, 255);
+  border: 1px solid white;
+  color: rgb(0, 0, 0);
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  gap: 3em;
+}
+
+.left{
+  flex: 2;
+}
+
+.feed{
+  flex: 2;
+}
+
+.right{
+  max-width: fit-content;
+  flex: 1;
+}
+
+.song-player {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.song-player h2 {
+  font-size: 22px;
+  margin-bottom: 3px;
+}
+
+.song-player p {
+  margin-bottom: 3px;
+}
+
+.container-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls {
+  padding-right: 20px;
+}
+
+.song-player-bar {
+  width: 288px;
+  background-color: white;
+}
+
+.song-image {
+  padding-left: 9px;
+}
+
+.albums > p {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.album-list {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  display: flex;
+  max-width: 114px;
+}
+
+.album-list > div {
+  padding-right: 18px;
+}
+
+.album-list p {
+  font-size: 15px;
+}
+
+.album-list img {
+  width: 114px;
+}
+
+.edit, .add-new{
+  margin-top: 3px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  background: rgb(239, 184, 73);
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  color: rgb(10, 0, 0);
+}
+
+.add-new{
+  margin-top: 35px;
+  width: 15em;
+}
+
+.delete button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  padding: 10px;
+  background-color: red;
+  border-radius: 3px;
+  width: 100px;
+  height: 25px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+}
+
+.middle {
+  display: flex;
+}
+
+.container-2 {
+  margin-left: 15px;
+}
+
+.middle img {
+  width: 90px;
+}
+
+.middle p {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.album-songs {
+  margin-left: 18px;
+}
+
+.album-songs li {
+  padding-top: 13px;
+}
+
+.recent-supporters {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 140px;
+}
+
+.recent-supporters img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+@media (max-width: 975px) {
+  body {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 850px) {
+  .artist-info {
+    flex-direction: column;
+  }
+
+  .artist-info > div:first-child {
+    flex-direction: column;
+  }
+
+  .profile-image {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .profile-image img {
+    min-width: 150px;
+    max-width: 150px;
+    height: auto;
+  }
+
+  .artist-text {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 16px;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 30px;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .social-media i {
+    padding-right: 10px;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .song-player {
+    margin-top: 10px;
+  }
+
+  .right {
+    margin-top: 30px;
+  }
+
+  .recent-supporters {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+}

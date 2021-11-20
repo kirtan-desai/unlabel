@@ -1,0 +1,95 @@
+main {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.right {
+  padding: 15vh 15vh;
+  background-color: rgba(10, 1, 7, 0.918);
+  color: white;
+  flex-grow: 1;
+  font-size: 40px;
+}
+
+.right img{
+  margin-top: 15px;
+  max-width: 8em;
+}
+
+.left {
+  padding: 20vh 30vh;
+  color: white;
+  background-color: rgb(110, 9, 9);
+}
+
+.profile-data{
+  padding: 5vh 30vh;
+
+}
+
+.login {
+  font-size: 35px;
+  margin-bottom: 27px;
+}
+
+::placeholder {
+  color: rgb(197, 194, 194);
+  opacity: 1;
+}
+
+input, textarea {
+  font-family: inherit;
+  padding: 5px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  border-radius: 3px;
+}
+
+button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 3px;
+  height: 25px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  color: black;
+}
+
+button:hover {
+  background: rgb(219, 219, 219);
+  border: 1px solid rgb(219, 219, 219);
+  color: rgb(0, 0, 0);
+}
+
+.album-info * {
+  margin: 5px;
+}
+
+.album-info {
+  margin-bottom: 10px;
+}
+
+.songs-info * {
+  margin: 5px;
+}
+
+.songs-info {
+  margin-bottom: 10px;
+}
+
+.add {
+  width: 10.5em;
+}
+
+@media (max-width: 800px) {
+  main {
+    flex-direction: column;
+  }
+}

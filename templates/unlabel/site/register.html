@@ -1,0 +1,21 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Login{% endblock %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static "css/login.css" %}" />{% endblock %}
+
+{% block content %}
+    <main>
+        <section class="left">
+            <form method="post" class="register" action="{% url 'unlabel:register' %}">
+                {% csrf_token %}
+                <p class="login">Register</p>
+                <input required type="text" placeholder="Username" name="username"/>
+                <input required type="text" placeholder="Display Name" name="display-name"/>
+                <input required type="email" placeholder="Email" name="email"/>
+                <input required type="password" placeholder="Password" name="password"/>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+        <section class="right">UNLABEL</section>
+    </main>
+{% endblock %}

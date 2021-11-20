@@ -1,0 +1,69 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Edit Profile{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/add-album.css" %}"/>{% endblock %}
+{% block content %}
+    <main>
+        <section class="left profile-data">
+            <form method="post" action="{% url 'unlabel:edit_profile' user.username %}">
+                {% csrf_token %}
+                <p class="login">Edit profile</p>
+                <div class="album-info">
+                    <label for="artist-image">Album Art</label><br>
+                    <input type="text" placeholder="Profile Picture" value="{{ user.artist.artistImage }}"
+                           name="artist-image"
+                           id="artist-image"/><span>.jpg/png</span>
+                    {#                    <button>Upload</button>#}
+                    <br>
+                    <label for="display-name">Display Name</label><br>
+                    <input required type="text" placeholder="Display Name" value="{{ user.artist.artistName }}" name="display-name"
+                           id="display-name"/>
+                    <br>
+
+                    <label for="email">Email</label><br>
+                    <input required type="email" placeholder="Email" value="{{ user.email }}" name="email"
+                           id="email"/>
+                    <br>
+
+{#                    <label for="password">Password</label><br>#}
+{#                    <input type="text" placeholder="Password" value="{{ user.password }}" name="password"#}
+{#                           id="password"/>#}
+{#                    <br>#}
+
+                    <label for="bio">Bio</label><br>
+                    <textarea rows="11" cols="22" placeholder="Bio" name="bio" id="bio">{{ user.artist.description }}</textarea>
+
+                    <button class="add" type="submit">Save</button>
+                </div>
+
+                {#                <div class="songs-info">#}
+                {#                    <label for="song-name">Song Names</label><br>#}
+                {#                    {% for song in songs %}#}
+                {##}
+                {#                        <input type="text" placeholder="Song Name" value="{{ song.songName }}" name="song-name"#}
+                {#                               id="song-name"/>#}
+                {#                    {% endfor %}#}
+                {#                </div>#}
+
+            </form>
+            <br>
+            <br>
+            <form method="post" action="{% url 'unlabel:change_password' user.id %}">
+                {% csrf_token %}
+                <div class="album-info">
+                    <label for="password">New password (Optional)</label><br>
+                    <input required type="password" placeholder="New password" name="password"
+                           id="password"/>
+                    <br>
+                    <button class="add" type="submit">Change password</button>
+
+                </div>
+            </form>
+        </section>
+        <section class="right">
+            <p>Hello,</p>{{ user.username }}
+            <img src="{% static user.artist.artistImage %}">
+        </section>
+    </main>
+{% endblock %}

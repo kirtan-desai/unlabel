@@ -1,0 +1,109 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Home{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/index.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/feed.css" %}"/>
+{% endblock %}
+
+{% block content %}
+    <!------------------------- Content 1 ---------------------->
+    <section class="content-1">
+        <div>
+            <!-- Welcome Text -->
+            <h1>Discover and support independent artists</h1>
+
+            <!-- Search Bar -->
+            <form class="search-bar" action="{% url "unlabel:search" %}" method="get">
+                <input
+                        type="text"
+                        class="search-bar-text"
+                        name="search-unlabel"
+                        placeholder="Search for artist or genre"
+                />
+                <button type="submit">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    {# Logged In user content #}
+    {% if request.session.username %}
+        <!------------------------- Content 2 ---------------------->
+        <div class="logged-in-content">
+            <div class="left">
+                <section class="content-2">
+                    <p>Recently played</p>
+                    <div class="new-albums">
+                        {% for album in album_list %}
+                            <div class="artist">
+                                <a href="{% url 'unlabel:album' album.id %}">
+                                    <img src="{% static album.albumArt %}" alt="{{ album.albumName }}"/>
+                                </a>
+                                <h3>{{ album.albumName }}</h3>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="content-2 color">
+                    <p>Followed Artists</p>
+                    <div class="new-albums">
+                        {% for artist in artist_list %}
+                            <div class="artist">
+                                <a href="{% url 'unlabel:artist' artist.user.username %}">
+                                    <img src="{% static artist.artistImage %}" alt="{{ artist.artistName }}"/>
+                                </a>
+                                <h3>{{ artist.artistName }}</h3>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+            <div class="feed">
+                {% include "unlabel/site/feed.html" %}
+            </div>
+
+        </div>
+
+    {% else %}
+
+        {#  Logged Out Content  #}
+        <!------------------------- Content 2 ---------------------->
+        <section class="content-2">
+            <div class="new-albums">
+                {% for artist in artist_list %}
+                    <a href="{% url 'unlabel:artist' artist.user.username %}">
+                        <img src="{% static artist.artistImage %}" alt="{{ artist.artistName }}"/>
+                    </a>
+                {% endfor %}
+
+            </div>
+        </section>
+
+        <!----------------------- Content 3 -------------------------->
+        <section class="content-3">
+            <div style="width: 70%">
+                <div>
+                    <div>
+                        <p>For artists</p>
+                        <p>to publish and sell their music.</p>
+                    </div>
+                    <div>
+                        <p>For fans</p>
+                        <p>to explore and support the artists.</p>
+                    </div>
+                </div>
+                <div>
+                    <p style="text-align: justify">
+                        Say bye to greedy labels feeding on your talent. Join Unlabel and
+                        be your own boss. All payments made through out platform are
+                        delivered to the artists without any commission.
+                    </p>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

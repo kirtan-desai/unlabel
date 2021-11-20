@@ -1,0 +1,76 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Explore {% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/list.css" %}"/>{% endblock %}
+{% block js %}
+    <script src="{% static "js/list.js" %}"></script>{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li style="background-color: #ff0202; color: white; padding: 10px" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <section class="banner">
+        <h1>The best albums. Curated.</h1>
+    </section>
+    <main>
+        <!-- Vertical Nav Bar -->
+        <section class="category-list-container">
+            <div class="sort">
+                    <span>Sort by:</span>
+                    <form action="{% url 'unlabel:explore' 'albumName' %}">
+                        <button>Alphabetically</button>
+                    </form>
+                    <form action="{% url 'unlabel:explore' '-published' %}">
+                        <button>Date Published</button>
+                    </form>
+                </div>
+{#            <ul class="category-list">#}
+{#                <li>#}
+{#                    <a href="#">Trending</a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="#">Hip Hop</a>#}
+{#                </li>#}
+{#                <li><a href="#">Electronic</a></li>#}
+{#                <li><a href="#">Solo</a></li>#}
+{#                <li><a href="#">Alternative Rock</a></li>#}
+{#                <li>#}
+{#                    <a href="#">Metal</a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="#">Fusion</a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="#">Classical</a>#}
+{#                </li>#}
+{#                <li><a href="#">Instrumental</a></li>#}
+{#                <li><a href="#">Dance</a></li>#}
+{#            </ul>#}
+        </section>
+
+        <!-- Artists listing -->
+        <ul class="artists-list">
+            {% for album in album_list %}
+                <li class="artist">
+                    <a href="{% url 'unlabel:album' album.id %}">
+                        <img src="{% static album.albumArt %}" alt={{ album.albumName }}/>
+                    </a>
+                    <h3>{{ album.albumName }}</h3>
+                    {% if request.session.role == 'admin' %}
+                        <form class="delete" method="post" action="{% url 'unlabel:delete' album.id %}">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('Do you want to delete?')">Delete</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+    </main>
+{% endblock %}

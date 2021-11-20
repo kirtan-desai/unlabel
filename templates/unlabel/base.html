@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Import font-awesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/global.css'  %}" />
+    {% block css %}{% endblock %}
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+  {% block js %}{% endblock %}
+
+
+    <title>Unlabel | {% block page-title %}{% endblock %}</title>
+  </head>
+  <body>
+    <!----------------------------- HEADER STARTS ----------------------------------->
+    <header>
+      <!-- Logo -->
+      <div>
+        <h3><a href="{% url 'unlabel:home' %}">UNLABEL</a></h3>
+      </div>
+
+        <!-- Nav Bar -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="{% url 'unlabel:home' %}">Home</a></li>
+                <li>|</li>
+                <li><a href="{% url 'unlabel:explore' 'albumName' %}">Albums</a></li>
+                <li>|</li>
+                <li><a href="{% url 'unlabel:artists' %}">Artists</a></li>
+                <li>|</li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+
+
+
+      <!-- Login/Registration -->
+      <nav>
+        <ul>
+            {% if request.session.username %}
+                <li>Logged in as <a class="profile-link" href="{% url 'unlabel:artist' request.session.username %}">{{ request.session.username }}</a></li>
+                <li>|</li>
+                <li><a href="{% url 'unlabel:logout' %}">Logout</a></li>
+
+            {% else %}
+                <li><a href="{% url 'unlabel:login' %}">Login</a></li>
+                <li>|</li>
+                <li><a href="{% url 'unlabel:register' %}">Register</a></li>
+
+            {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <!----------------------------- HEADER ENDS ------------------------------->
+
+    {% block content %}{% endblock %}
+
+      <footer>
+        <div>UNLABEL 2021</div>
+        <div class="footer-links">
+          <p>Contact</p>
+          |
+          <p>Privacy</p>
+          |
+          <p>Terms</p>
+        </div>
+        <div class="footer-social">
+          <i class="fab fa-facebook-square"></i>
+          <i class="fab fa-youtube"></i>
+          <i class="fab fa-twitter-square"></i>
+        </div>
+      </footer>
+
+  </body>
+</html>

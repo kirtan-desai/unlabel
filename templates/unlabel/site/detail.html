@@ -1,0 +1,177 @@
+{% extends 'unlabel/base.html' %}
+{% load humanize %}
+{% block page-title %}Add Album{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/album.css" %}"/>{% endblock %}
+{% block js %}
+    <script src="{% static "js/album.js" %}"></script>
+{% endblock %}
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <section class="artist-info">
+        <div>
+            <div class="profile-image">
+                <img src="{% static album.albumArt %}" alt=""/>
+            </div>
+            <div class="artist-text">
+                <div><h1>{{ album.albumName }}</h1></div>
+                <div>
+                    <p>by <a class="artist-link" href="{% url 'unlabel:artist' album.artist.user.username %}">{{ artist_name }}</a>
+                    </p>
+                    <br/>
+                    <p>
+                        {% if album.num_of_songs == 1 %}
+                            1 song
+                        {% else %}
+                            {{ album.num_of_songs }} songs
+                        {% endif %}
+                    </p><br/>
+                    <p>
+                        Published on: {{ album.published }}
+                    </p>
+                    {# Edit Album #}
+                    {% if request.session.role == 'regular' and album.artist.user.username == request.session.username %}
+                        <form action="{% url 'unlabel:edit_album' album.id %}">
+                            <button class="edit">Edit</button>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="links">
+                    <button>Support</button>
+                    <div class="social-media">
+                        <i class="fab fa-facebook-square"></i>
+                        <i class="fab fa-youtube"></i>
+                        <i class="fab fa-twitter-square"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <ol class="album-songs">
+            {% for song in songs %}
+                <li>
+                    <div style="display: flex; justify-content: space-between">
+                        <span>{{ song.songName }}</span>
+                        <div style="display: flex">
+                            {% if song.lyrics %}
+                                <button class="get-lyrics" data-song-id="{{ song.id }}"
+                                        data-ajax-url="{% url 'unlabel:get_lyrics' %}">
+                                    Get Lyrics
+                                </button>
+                            {% else %}
+                                {% if request.session.role == 'regular' and album.artist.user.username == request.session.username %}
+                                <button class="add-lyrics" data-song-id="{{ song.id }}">Add lyrics</button>
+                                {% endif %}
+                            {% endif %}
+                            <button>Play</button>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    </section>
+    <section class="lyrics">
+    <pre></pre>
+    <div class="lyrics-form" style="display: flex;">
+        <textarea></textarea>
+        <button class="submit-lyrics" data-song-id="" data-ajax-url="{% url 'unlabel:add_lyrics' %}">Submit</button>
+    </div>
+    </section>
+
+    {#Comments#}
+    <h2>Comments</h2>
+
+    {# User Comment #}
+    {% if request.session.username %}
+    <section class="user-comment">
+        <div>
+            <img src="{% static user.artist.artistImage %}" alt=""/>
+        </div>
+
+        <div class="comment-div">
+            <div class="comment-input-div">
+                <p style="margin-left: 20px">{{ user.artist.artistName }}</p>
+                <div>
+                    <!-- Comment Input -->
+                    <input
+                            class="comment-input"
+                            type="text"
+                            placeholder="Share your thoughts!"
+                    />
+                </div>
+            </div>
+
+            <div style="flex-grow: 1">
+                <!-- Post Button -->
+                <button data-album-id="{{ album.id }}" data-ajax-url="{% url 'unlabel:add_comment' %}" class="post-comment">Post</button>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Comments -->
+    <section class="posts">
+        {% if comments %}
+            {% for comment in comments %}
+                <div>
+                    <img src="{% static comment.user.artist.artistImage %}" alt=""/>
+                    <div>
+                        <a style="color: white" href="{% url 'unlabel:artist' comment.user.username %}">
+                            <h3>{{ comment.user.artist.artistName }}</h3></a><span
+                            class="date">{{ comment.timestamp | naturaltime }}</span><br>
+                        {% if user.username == comment.user.username or user.artist.role == 'admin' %}
+                            <button  class="edit-comment-button">Edit
+                            </button>
+                            <button data-comment-id="{{ comment.id }}"
+                                    data-ajax-url="{% url 'unlabel:delete_comment' %}" class="delete-comment">Delete
+                            </button>
+                            <br>
+                        {% endif %}
+                        <p class="comment-text">{{ comment.body }}</p>
+                        <div style="display: none" class="edit-comment">
+                            <input class="edit-comment-input">
+                            <button data-comment-id="{{ comment.id }}"
+                                    data-ajax-url="{% url 'unlabel:edit_comment' %}"
+                                    class="save-comment">Save
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-comments">No commments yet!</p>
+        {% endif %}
+    </section>
+
+{#  SONG PLAYER  #}
+    {#    <section>#}
+    {#        <div class="song-player">#}
+    {#            <div>#}
+    {#                <div class="container-1">#}
+    {#                    <div>#}
+    {#                        <h2>{{ songs.0.songName }}</h2>#}
+    {#                        <p>{{ album.albumName }}</p>#}
+    {#                    </div>#}
+    {#                    <div class="controls">#}
+    {#                        <i class="fas fa-backward">&nbsp;</i>&nbsp;<i class="fas fa-play"#}
+    {#                    >&nbsp;<i class="fas fa-forward"></i#}
+    {#                    ></i>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="song-player-bar">song player bar</div>#}
+    {#            </div>#}
+    {#            <div class="song-image">#}
+    {#                <img src="{% static "albums/jaago.jpeg" %}" alt="" style="width: 60px"/>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </section>#}
+{% endblock %}

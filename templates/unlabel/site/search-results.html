@@ -1,0 +1,14 @@
+{% extends 'unlabel/base.html' %}
+{% block page-title %}Search {% endblock %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static "css/list.css" %}" />{% endblock %}
+{% block js %}<script src="{% static "js/search-results.js" %}"></script>{% endblock %}
+
+{% block content %}
+    <section>
+      <h1>Search Results Page</h1>
+    </section>
+    <div>
+      <p class="result"></p>
+    </div>
+{% endblock %}

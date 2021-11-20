@@ -1,0 +1,180 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+.messages .warning{
+  background-color: #ff0202;
+  color: #f3eeee;
+  padding: 10px;
+}
+
+.banner {
+  text-align: center;
+  padding: 30px;
+  background-color: rgb(110, 9, 9);
+}
+
+.banner h1 {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  padding-top: 25px;
+}
+
+.category-list-container {
+  height: 634px;
+  min-width: 196px;
+}
+
+.sort{
+display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.sort button {
+  width: 140px;
+  padding: 3px;
+  background: rgb(0, 0, 0);
+  border: 1px solid white;
+  border-radius: 3px;
+  color: rgb(255, 255, 255);
+  margin-left: 10px;
+}
+
+.sort button:hover{
+  background-color: white;
+  color: black;
+}
+
+.category-list-container ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 19px;
+}
+
+.category-list-container li {
+  margin-top: 25px;
+}
+
+.category-list-container a {
+  text-decoration: none;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  max-width: 200px;
+}
+
+.category-list-container a:hover,
+.category-list-container a.active {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.active-category {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Artist lists */
+
+.artists-list {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: 20px;
+  padding: 1em;
+  gap: 4em;
+}
+
+.artist {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  max-width: 200px;
+}
+
+.artist img {
+  width: 200px;
+  border-radius: 3px;
+}
+
+.artist h3 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  padding-top: 10px;
+}
+.delete{
+  display: flex;
+  justify-content: center;
+}
+
+.delete button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  padding: 10px;
+  background-color: red;
+  border-radius: 3px;
+  width: 100px;
+  height: 25px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+}
+
+@media (max-width: 768px) {
+  body > section > h1 {
+    font-size: 40px;
+  }
+  main {
+    flex-direction: column;
+    padding-top: 4px;
+  }
+  .category-list-container {
+    height: 50px;
+    min-width: 196px;
+  }
+  .category-list-container ul {
+    display: flex;
+    flex-direction: row;
+    padding-left: 19px;
+    overflow: scroll;
+  }
+
+  .category-list-container li {
+    margin: 8px 15px;
+    white-space: nowrap;
+  }
+
+  .artist img {
+    width: 150px;
+    border-radius: 3px;
+  }
+  .artists-list {
+    padding: 0.6em;
+    gap: 1.2em;
+  }
+
+  .artist {
+    max-width: 150px;
+  }
+}
